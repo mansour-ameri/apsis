@@ -1,6 +1,7 @@
 package com.apsis.assignment.controller;
 
 import com.apsis.assignment.dtos.CounterDto;
+import com.apsis.assignment.dtos.ResponseDto;
 import com.apsis.assignment.service.CounterService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -8,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/v1/counters")
@@ -28,23 +29,26 @@ public class CounterController {
     }
 
     @PostMapping
-    public ResponseEntity<CounterDto> createCounter(@Valid @RequestBody CounterDto request){
-        //TODO: check if element exist
-        return  ResponseEntity.ok().body(counterService.createCounter(request));
+    public ResponseEntity<CounterDto> createCounter(@Valid @RequestBody CounterDto counter){
+        return  ResponseEntity.ok().body(counterService.createCounter(counter));
     }
 
     @GetMapping
-    public ResponseEntity<List<CounterDto>> getAllCounters(){
-        return ResponseEntity.ok().body(counterService.getAllCounters());
+    public ResponseEntity<ResponseDto> getAllCounters(){
+        return ResponseEntity.ok().body(ResponseDto.builder()
+                .totalNumberOfCounters(counterService.getAllCounters().size())
+                .counters(counterService.getAllCounters()).build());
     }
 
     @GetMapping("/{counterName}")
     public ResponseEntity<CounterDto> getNamedCounter(@PathVariable String counterName){
-        return ResponseEntity.ok().body(counterService.getNamedCounter(counterName));
+        return ResponseEntity.ok().body(counterService.getNamedCounter(counterName)
+                .orElseThrow(() -> new NoSuchElementException(String.format("Counter with name %s not exist", counterName))));
     }
 
     @PutMapping("/{counterName}")
     public ResponseEntity<CounterDto> increaseCounter(@PathVariable String counterName){
-        return ResponseEntity.ok().body(counterService.increaseCounter(counterName));
+        return ResponseEntity.ok().body(counterService.increaseCounter(counterName)
+                .orElseThrow(() -> new NoSuchElementException(String.format("Counter with name %s not exist", counterName))));
     }
 }
