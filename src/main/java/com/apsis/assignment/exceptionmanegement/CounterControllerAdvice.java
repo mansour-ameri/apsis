@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 
 /**
- * Can extend ResponseEntityExceptionHandler in case to override handel exceptions
+ * Exception handler for the CounterController class
  */
 @Slf4j
 @RestControllerAdvice

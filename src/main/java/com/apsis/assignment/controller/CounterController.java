@@ -5,6 +5,9 @@ import com.apsis.assignment.dtos.ResponseDto;
 import com.apsis.assignment.service.CounterService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +33,7 @@ public class CounterController {
 
     @PostMapping
     public ResponseEntity<CounterDto> createCounter(@Valid @RequestBody CounterDto counter){
-        return  ResponseEntity.ok().body(counterService.createCounter(counter));
+        return  ResponseEntity.status(HttpStatus.CREATED).body(counterService.createCounter(counter));
     }
 
     @GetMapping

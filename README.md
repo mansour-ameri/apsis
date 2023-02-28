@@ -9,7 +9,8 @@ It should expose a few methods:
 - one to get a list of all counters and their current value
 - one to create new counters
 
-### OpenAPI link:
+### OpenAPI link: 
+ - Remove ID field from payload before try in POST method - (need to be fixed from swagger sample payload)  
 http://localhost:8080/swagger-ui/index.html#/
 
 
