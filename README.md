@@ -13,6 +13,13 @@ It should expose a few methods:
  - Remove ID field from payload before try in POST method - (need to be fixed from swagger sample payload)  
 http://localhost:8080/swagger-ui/index.html#/
 
+### How to run
+
+````
+- Inside apsis directory just run (default port is 8080)
+    mvn spring-boot:run
+````
+
 
 ### create new counter:
 ````
@@ -39,4 +46,4 @@ POST /v1/counters/{counter_name}
 PUT /v1/counters/{counter_name}
 ````
 
-in all cases backend will create UUID as a unique identifier for each counter.
+in Post method backend will create UUID as a unique identifier for each counter.
